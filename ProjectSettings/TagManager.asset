@@ -13,10 +13,10 @@ TagManager:
   - UI
   - 
   - 
-  - InvisibleWall
+  - Post-processing
   - Enemy
   - Player
-  - 
+  - InvisibleWall
   - 
   - 
   - 
@@ -38,6 +38,12 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: GameBackground
+    uniqueID: 2021623821
+    locked: 0
+  - name: Actors
+    uniqueID: 4079706017
+    locked: 0
   - name: Default
     uniqueID: 0
     locked: 0
