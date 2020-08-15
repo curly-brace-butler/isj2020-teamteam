@@ -8,6 +8,12 @@ public class DuplicateAI : MonoBehaviour
 
     int positionIndex = 0;
 
+    private void Start()
+    {
+        SpriteRenderer sprite = this.GetComponent<SpriteRenderer>();
+        sprite.sortingLayerName = "Entities";
+    }
+
     private void FixedUpdate()
     {
         transform.position = recordedPositions[positionIndex];
