@@ -10,5 +10,5 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: dc944a4e171ea2a4396b18b8d21786a8, type: 3}
-  m_Name: OnEnemyScore
+  m_Name: OnDuplicateDeath
   m_EditorClassIdentifier: 

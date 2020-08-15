@@ -21,6 +21,12 @@ public class BounceBall : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
+        var controller = collision.gameObject.GetComponent<DuplicateController>();
+        if (controller != null)
+        {
+            controller.Kill();
+        }
+
         var contactPoint = collision.GetContact(0).point;
         var normal = (contactPoint -(Vector2)transform.position).normalized;
         direction = Vector2.Reflect(direction, normal);

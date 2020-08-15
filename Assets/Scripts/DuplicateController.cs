@@ -1,9 +1,12 @@
 ﻿using System;
 using UnityEngine;
 
+[RequireComponent(typeof(Reader))]
 public class DuplicateController : MonoBehaviour
 {
     public float speed = 5f;
+
+    public GameEvent OnDuplicateDeath;
 
     Vector2 input;
     Vector2 direction;
@@ -11,7 +14,7 @@ public class DuplicateController : MonoBehaviour
 
     Vector2 intialPosition;
 
-    void Start()
+    private void Awake()
     {
         intialPosition = transform.position;
 
@@ -27,6 +30,16 @@ public class DuplicateController : MonoBehaviour
         UpdateInputs();
 
         direction = input.normalized;
+
+        reader.Restore();
+
+        gameObject.SetActive(true);
+    }
+
+    public void Kill()
+    {
+        gameObject.SetActive(false);
+        OnDuplicateDeath?.Raise();
     }
 
     private void UpdateInputs()

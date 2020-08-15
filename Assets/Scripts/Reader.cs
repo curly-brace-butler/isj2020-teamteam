@@ -40,10 +40,10 @@ public class Reader : MonoBehaviour
         tape = tapeReader;
     }
 
-    public void Restore(float currentTime)
+    public void Restore()
     {
         tapeIndex = 0;
-        startTime = currentTime;
+        startTime = Time.time;
     }
 
     private void Update()
@@ -54,7 +54,7 @@ public class Reader : MonoBehaviour
         {
             if (inputAction.action == InputAction.Action.EndRecord)
             {
-                Restore(Time.time);
+                Restore();
 
                 OnTapeFinish?.Invoke();
             }

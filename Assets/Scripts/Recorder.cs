@@ -42,24 +42,29 @@ public class Recorder : MonoBehaviour
         new KeyActionPair { keyCode = KeyCode.S, action = InputAction.Action.Down }
     };
 
-    public GameObject duplicatePrefabs;
-
     List<InputAction> recorders = new List<InputAction>();
 
-    float startTime;
+    float startedTime;
 
-    public void ResetRecorder()
+    private void Start()
     {
-        startTime = Time.time;
-        recorders = new List<InputAction>();
+        StartRecording(Time.time);
     }
 
-    public void SpawnDuplicate(Vector2 playerInitialPosition)
+    public void StartRecording(float startTime)
     {
-        recorders.Add(new InputAction { action = InputAction.Action.EndRecord, time = Time.time - startTime });
+        startedTime = startTime;
+        recorders = new List<InputAction>();
 
-        GameObject duplicate = Instantiate(duplicatePrefabs, playerInitialPosition, Quaternion.identity);
-        duplicate.GetComponent<Reader>().Initialize(new TapeReader { inputActions = recorders, intialPosition = playerInitialPosition });
+        enabled = true;
+    }
+
+    public List<InputAction> StopRecording()
+    {
+        enabled = false;
+
+        recorders.Add(new InputAction { action = InputAction.Action.EndRecord, time = Time.time - startedTime });
+        return recorders;
     }
 
     private void Update()
@@ -68,19 +73,14 @@ public class Recorder : MonoBehaviour
         {
             if (Input.GetKeyDown(registerKeyActions[i].keyCode))
             {
-                Debug.Log($"GetKeyDown: {registerKeyActions[i].keyCode}");
-                recorders.Add(new InputAction { action = registerKeyActions[i].action, status = InputAction.Status.Pressed, time = Time.time - startTime });
+                //Debug.Log($"GetKeyDown: {registerKeyActions[i].keyCode}");
+                recorders.Add(new InputAction { action = registerKeyActions[i].action, status = InputAction.Status.Pressed, time = Time.time - startedTime });
             }
             if (Input.GetKeyUp(registerKeyActions[i].keyCode))
             {
-                Debug.Log($"GetKeyUp: {registerKeyActions[i].keyCode}");
-                recorders.Add(new InputAction { action = registerKeyActions[i].action, status = InputAction.Status.Released, time = Time.time - startTime });
+                //Debug.Log($"GetKeyUp: {registerKeyActions[i].keyCode}");
+                recorders.Add(new InputAction { action = registerKeyActions[i].action, status = InputAction.Status.Released, time = Time.time - startedTime });
             }
-        }
-
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            SpawnDuplicate(new Vector2(-5, 0));
         }
     }
 }
