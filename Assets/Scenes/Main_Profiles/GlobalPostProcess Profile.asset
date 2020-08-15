@@ -90,8 +90,8 @@ MonoBehaviour:
     overrideState: 0
     value: 0
   saturation:
-    overrideState: 0
-    value: 57.2
+    overrideState: 1
+    value: 60
   brightness:
     overrideState: 0
     value: 0
@@ -1375,7 +1375,7 @@ MonoBehaviour:
     value: 1
   intensity:
     overrideState: 1
-    value: 0.296
+    value: 0.108
   size:
     overrideState: 0
     value: 1
