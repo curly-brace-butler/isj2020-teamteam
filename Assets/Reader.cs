@@ -51,8 +51,8 @@ public class TapeReader
             m_index++;
         }
 
-        return (m_index > 1 && m_tape[m_index - 1].m_keyStatus == Action.KeyStatus.pressed)
-               || (m_index < m_tape.Count - 1 && m_tape[m_index + 1].m_keyStatus == Action.KeyStatus.released);
+        return (m_index > 0 && m_tape[m_index - 1].m_keyStatus == Action.KeyStatus.pressed)
+               || (m_index < m_tape.Count - 1 && m_tape[m_index].m_keyStatus == Action.KeyStatus.released);
     }
 
     public bool GetKeyUp()
@@ -80,6 +80,11 @@ public class TapeReader
             || m_lastFramePressed == Time.frameCount
             || m_lastFrameReleased == Time.frameCount;
     }
+
+    public void Update()
+    {
+        
+    }
 }
 
 public class Reader : MonoBehaviour
@@ -100,6 +105,11 @@ public class Reader : MonoBehaviour
             }
             Debug.Log(line);
         }
+    }
+
+    public void Update()
+    {
+        
     }
 
     public bool GetKeyDown(KeyCode vKey)
