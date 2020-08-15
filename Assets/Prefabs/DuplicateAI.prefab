@@ -12,7 +12,8 @@ GameObject:
   - component: {fileID: 8266393707327977136}
   - component: {fileID: 8266393707327977137}
   - component: {fileID: 8266393707327977138}
-  - component: {fileID: 8266393707327977139}
+  - component: {fileID: 8331451300173956080}
+  - component: {fileID: 5435453874557980023}
   m_Layer: 9
   m_Name: DuplicateAI
   m_TagString: Untagged
@@ -132,7 +133,7 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
---- !u!114 &8266393707327977139
+--- !u!114 &8331451300173956080
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -141,6 +142,19 @@ MonoBehaviour:
   m_GameObject: {fileID: 8266393707327977140}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: db50c4105225bb047afa475bdc657d8d, type: 3}
+  m_Script: {fileID: 11500000, guid: f970d5548331e4548a8b27dc29c4c0e6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &5435453874557980023
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8266393707327977140}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 87971d083f9844d4abe36e874a30d0c7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 5
