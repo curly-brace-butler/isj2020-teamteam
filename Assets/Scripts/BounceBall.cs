@@ -9,7 +9,7 @@ public class BounceBall : MonoBehaviour
 
     void Start()
     {
-        
+
     }
 
     private void FixedUpdate()
@@ -20,6 +20,6 @@ public class BounceBall : MonoBehaviour
     private void OnCollisionEnter2D(Collision2D collision)
     {
         var contactPoint = collision.contacts[0].point;
-        direction = Vector3.Reflect(direction, contactPoint).normalized;
+        direction = (contactPoint - (Vector2)collision.transform.position).normalized;
     }
 }
