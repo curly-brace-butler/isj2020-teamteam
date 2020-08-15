@@ -20,6 +20,6 @@ public class BounceBall : MonoBehaviour
     private void OnCollisionEnter2D(Collision2D collision)
     {
         var contactPoint = collision.contacts[0].point;
-        direction = (contactPoint - (Vector2)collision.transform.position).normalized;
+        direction = Vector3.Reflect(direction, contactPoint).normalized;
     }
 }
