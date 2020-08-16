@@ -7,11 +7,11 @@ public class BounceBall : MonoBehaviour
     public float speed = 1f;
     public Vector2 direction = new Vector2(-1, 0);
 
-    Vector2 initialPosition;
+    Collider2D circleCollider;
 
-    private void Start()
+    private void Awake()
     {
-        initialPosition = transform.position;
+        circleCollider = GetComponent<CircleCollider2D>();
     }
 
     private void FixedUpdate()
@@ -32,9 +32,14 @@ public class BounceBall : MonoBehaviour
         direction = Vector2.Reflect(direction, normal);
     }
 
-    public void Restore()
+    public void Throw(Vector2 direction, float speed)
     {
-        direction = new Vector2(-1, 0);
-        transform.position = initialPosition;
+        this.direction = direction;
+        this.speed = speed;
+
+        transform.parent = null;
+
+        circleCollider.enabled = true;
+        enabled = true;
     }
 }

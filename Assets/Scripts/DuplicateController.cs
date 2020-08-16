@@ -21,6 +21,7 @@ public class DuplicateController : MonoBehaviour
         input = Vector2.zero;
         direction = Vector2.zero;
         reader = GetComponent<Reader>();
+
         reader.OnTapeFinish += Restore;
     }
 
