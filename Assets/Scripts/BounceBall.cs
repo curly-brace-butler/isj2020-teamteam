@@ -45,18 +45,20 @@ public class BounceBall : MonoBehaviour
         {
             if (collision.collider.tag == "Wall")
             {
+                ballAudioSource.pitch = UnityEngine.Random.Range(1.2f, 1.5f);
                 ballAudioSource.PlayOneShot(wallCollisionSound, 4.0f);
-            // Does this give a vector from the gameObject to the camera?
-            var vectorToCamera = mainCamera.transform.position - this.gameObject.transform.position;
-            // What is the up axis for my object?
-            var upAxisForObject = Vector3.up;
-            // Points object axis toward camera. 
-            var rotation = Quaternion.LookRotation(vectorToCamera, upAxisForObject);
+                // Does this give a vector from the gameObject to the camera?
+                var vectorToCamera = mainCamera.transform.position - this.gameObject.transform.position;
+                // What is the up axis for my object?
+                var upAxisForObject = Vector3.up;
+                // Points object axis toward camera. 
+                var rotation = Quaternion.LookRotation(vectorToCamera, upAxisForObject);
 
                 Instantiate(sparks, contactPoint, rotation);
             }
             else if (collision.collider.tag == "Duplicate")
             {
+                ballAudioSource.pitch = UnityEngine.Random.Range(1.2f, 1.5f);
                 ballAudioSource.PlayOneShot(duplicateCollisionSound, 5.0f);
             }
         }
