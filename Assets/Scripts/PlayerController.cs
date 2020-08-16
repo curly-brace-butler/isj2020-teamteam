@@ -20,15 +20,15 @@ public class PlayerController : MonoBehaviour
 
     private void Awake()
     {
-        Movement = Vector2.zero;
+        Movement = Vector2.zero;       
     }
 
-    void Start()
+    private void OnEnable()
     {
         //Disable collision between player and the ball
         var playerCollider = GetComponent<CircleCollider2D>();
         var playerBallCollider = playerBall.GetComponent<CircleCollider2D>();
-        Physics2D.IgnoreCollision(playerCollider, playerBallCollider);
+        Physics2D.IgnoreCollision(playerCollider, playerBallCollider, true);
     }
 
     private void Update()
