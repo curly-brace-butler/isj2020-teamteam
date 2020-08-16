@@ -13,9 +13,17 @@ public class PlayerController : MonoBehaviour
     Vector2 direction;
     Vector2 mouseDirection;
 
-    void Start()
+    private void Awake()
     {
         direction = Vector2.zero;
+    }
+
+    void Start()
+    {
+        //Disable collision between player and the ball
+        var playerCollider = GetComponent<CircleCollider2D>();
+        var playerBallCollider = playerBall.GetComponent<CircleCollider2D>();
+        Physics2D.IgnoreCollision(playerCollider, playerBallCollider);
     }
 
     private void Update()
@@ -47,5 +55,15 @@ public class PlayerController : MonoBehaviour
         direction.y = Input.GetAxisRaw("Vertical");
 
         transform.Translate(direction * speed * Time.fixedDeltaTime);
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.tag == "PlayerBall")
+        {
+            Debug.Log("Trigger with ball");
+            playerBall = collision.GetComponent<BounceBall>();
+            playerBall.Catch(transform);
+        }
     }
 }
