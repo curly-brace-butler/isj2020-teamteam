@@ -45,7 +45,7 @@ public class BounceBall : MonoBehaviour
         {
             if (collision.collider.tag == "Wall")
             {
-                ballAudioSource.PlayOneShot(wallCollisionSound, 0.4f);
+                ballAudioSource.PlayOneShot(wallCollisionSound, 4.0f);
             // Does this give a vector from the gameObject to the camera?
             var vectorToCamera = mainCamera.transform.position - this.gameObject.transform.position;
             // What is the up axis for my object?
@@ -57,7 +57,7 @@ public class BounceBall : MonoBehaviour
             }
             else if (collision.collider.tag == "Duplicate")
             {
-                ballAudioSource.PlayOneShot(duplicateCollisionSound, 0.5f);
+                ballAudioSource.PlayOneShot(duplicateCollisionSound, 5.0f);
             }
         }
         direction = Vector2.Reflect(direction, normal);
