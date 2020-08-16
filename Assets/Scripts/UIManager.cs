@@ -22,7 +22,9 @@ public class UIManager : MonoBehaviour
         hideGameOver();
         showStart();
         Debug.Log("Show Start");
-    } 
+    }
+
+
 
     public void showStart()
     {
