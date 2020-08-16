@@ -968,6 +968,8 @@ MonoBehaviour:
   ballAudioSource: {fileID: 0}
   wallCollisionSound: {fileID: 0}
   duplicateCollisionSound: {fileID: 0}
+  mainCamera: {fileID: 0}
+  sparks: {fileID: 0}
 --- !u!50 &719970191
 Rigidbody2D:
   serializedVersion: 4
@@ -1168,6 +1170,17 @@ PrefabInstance:
       propertyPath: duplicateCollisionSound
       value: 
       objectReference: {fileID: 8300000, guid: 34c9a1af9cbcf774bb10b592244fb55f, type: 3}
+    - target: {fileID: 4228091340823795623, guid: 8591f9fb0fa2e714583efdfef6cfa0b6,
+        type: 3}
+      propertyPath: sparks
+      value: 
+      objectReference: {fileID: 6563466963940366931, guid: 6e7184d5727bead4d821998e679f5380,
+        type: 3}
+    - target: {fileID: 4228091340823795623, guid: 8591f9fb0fa2e714583efdfef6cfa0b6,
+        type: 3}
+      propertyPath: mainCamera
+      value: 
+      objectReference: {fileID: 1399136490}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8591f9fb0fa2e714583efdfef6cfa0b6, type: 3}
 --- !u!1 &1035424240 stripped

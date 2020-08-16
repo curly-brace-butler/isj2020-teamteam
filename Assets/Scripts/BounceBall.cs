@@ -8,8 +8,12 @@ public class BounceBall : MonoBehaviour
     public Vector2 direction = new Vector2(-1, 0);
 
     public AudioSource ballAudioSource;
-    public AudioClip wallCollisionSound;
-    public AudioClip duplicateCollisionSound;
+    public AudioClip wallCollisionSound;  // drum
+    public AudioClip duplicateCollisionSound; // pluck
+
+    public Camera mainCamera;
+
+    public ParticleSystem sparks;
 
     Rigidbody2D rigid;
 
@@ -23,23 +27,31 @@ public class BounceBall : MonoBehaviour
         transform.Translate(direction * speed * Time.fixedDeltaTime);
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        if (this.tag == "PlayerBall")
+        private void OnCollisionEnter2D(Collision2D collision)
         {
-            if (collision.collider.tag == "Wall")
+            var contactPoint = collision.GetContact(0).point;
+            var normal = (contactPoint - (Vector2)transform.position).normalized;
+            if (this.tag == "PlayerBall")
             {
-                ballAudioSource.PlayOneShot(wallCollisionSound, 0.4f);
+                if (collision.collider.tag == "Wall")
+                {
+                    ballAudioSource.PlayOneShot(wallCollisionSound, 0.4f);
+                // Does this give a vector from the gameObject to the camera?
+                var vectorToCamera = mainCamera.transform.position - this.gameObject.transform.position;
+                // What is the up axis for my object?
+                var upAxisForObject = Vector3.up;
+                // Points object axis toward camera. 
+                var rotation = Quaternion.LookRotation(vectorToCamera, upAxisForObject);
+
+                    Instantiate(sparks, contactPoint, rotation);
+                }
+                else if (collision.collider.tag == "Duplicate")
+                {
+                    ballAudioSource.PlayOneShot(duplicateCollisionSound, 0.5f);
+                }
             }
-            else if (collision.collider.tag == "Duplicate")
-            {
-                ballAudioSource.PlayOneShot(duplicateCollisionSound, 0.5f);
-            }
+            direction = Vector2.Reflect(direction, normal);
         }
-        var contactPoint = collision.GetContact(0).point;
-        var normal = (contactPoint - (Vector2)transform.position).normalized;
-        direction = Vector2.Reflect(direction, normal);
-    }
 
     public void Throw(Vector2 force)
     {
