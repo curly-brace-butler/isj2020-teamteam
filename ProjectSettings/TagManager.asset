@@ -6,6 +6,8 @@ TagManager:
   tags:
   - PlayerBall
   - DuplicateBall
+  - Wall
+  - Duplicate
   layers:
   - Default
   - TransparentFX

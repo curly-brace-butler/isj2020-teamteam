@@ -7,6 +7,10 @@ public class BounceBall : MonoBehaviour
     public float speed = 1f;
     public Vector2 direction = new Vector2(-1, 0);
 
+    public AudioSource ballAudioSource;
+    public AudioClip wallCollisionSound;
+    public AudioClip duplicateCollisionSound;
+
     Rigidbody2D rigid;
 
     private void Awake()
@@ -21,6 +25,17 @@ public class BounceBall : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
+        if (this.tag == "PlayerBall")
+        {
+            if (collision.collider.tag == "Wall")
+            {
+                ballAudioSource.PlayOneShot(wallCollisionSound, 0.4f);
+            }
+            else if (collision.collider.tag == "Duplicate")
+            {
+                ballAudioSource.PlayOneShot(duplicateCollisionSound, 0.5f);
+            }
+        }
         var contactPoint = collision.GetContact(0).point;
         var normal = (contactPoint - (Vector2)transform.position).normalized;
         direction = Vector2.Reflect(direction, normal);
