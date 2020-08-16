@@ -964,7 +964,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 5
+  decelerateSpeed: 0
   direction: {x: -1, y: 0}
+  destroyWhenIdle: 0
   ballAudioSource: {fileID: 0}
   wallCollisionSound: {fileID: 0}
   duplicateCollisionSound: {fileID: 0}

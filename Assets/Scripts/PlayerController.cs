@@ -104,9 +104,6 @@ public class PlayerController : MonoBehaviour
         if (collision.gameObject.tag == Constant.DuplicateBallTag)
         {
             Debug.LogWarning("Player Death");
-            // TODO: Reload on death breaks player-projectile physics (inverts launch vector??)
-            // SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-            //Kill();
 
             OnPlayerKilled.Raise();
 

@@ -22,22 +22,7 @@ public class UIManager : MonoBehaviour
         hideGameOver();
         showStart();
         Debug.Log("Show Start");
-    }
-
-    void Update()
-    {
-        // for debug 
-        if (Input.GetKeyDown(KeyCode.S))
-        {
-            hideStart();
-        }
-        if (Input.GetKeyDown(KeyCode.G))
-        {
-            Debug.Log("Get Key G");
-            ShowGameOver();
-        }
-    }
-    
+    } 
 
     public void showStart()
     {
