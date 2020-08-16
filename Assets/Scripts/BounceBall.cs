@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class BounceBall : MonoBehaviour
 {
+    public float timeAlive = 0f;
+
     public float speed = 1f;
     public Vector2 direction = new Vector2(-1, 0);
 
@@ -16,6 +18,10 @@ public class BounceBall : MonoBehaviour
     private void Awake()
     {
         rigid = GetComponent<Rigidbody2D>();
+        if (timeAlive > 0)
+        {
+            StartCoroutine(DestroyAfterTime());
+        }
     }
 
     private void FixedUpdate()
@@ -65,5 +71,12 @@ public class BounceBall : MonoBehaviour
 
         transform.parent = parent;
         transform.localPosition = Vector3.zero;
+    }
+
+    IEnumerator DestroyAfterTime()
+    {
+        yield return new WaitForSeconds(timeAlive);
+
+        Destroy(gameObject);
     }
 }
