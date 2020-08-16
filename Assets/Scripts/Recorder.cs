@@ -11,9 +11,12 @@ public struct PlayerInput
 
 public class Recorder : MonoBehaviour
 {
+    public float maxRecordTime = 5f;
     public PlayerController controller;
 
     List<PlayerInput> recorders = new List<PlayerInput>();
+
+    float accumulateTime = 0;
 
     // Update is called once per frame
     void LateUpdate()
@@ -24,10 +27,18 @@ public class Recorder : MonoBehaviour
             shoot = controller.BallThrow,
             deltaTime = Time.deltaTime
         });
+
+        accumulateTime += Time.deltaTime;
+        if (accumulateTime >= maxRecordTime)
+        {
+            accumulateTime -= recorders[0].deltaTime;
+            recorders.RemoveAt(0);
+        }
     }
 
     public void StartRecording()
     {
+        accumulateTime = 0;
         recorders = new List<PlayerInput>();
 
         enabled = true;

@@ -29,7 +29,7 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        initialPlayerPositionLastRound = player.transform.position;
+        StartCoroutine(UpdatePlayerInitialPosition());
     }
 
     private void Update()
@@ -72,6 +72,20 @@ public class GameManager : MonoBehaviour
         if (--aliveDuplicate == 0)
         {
             NewRound();
+        }
+    }
+
+    IEnumerator UpdatePlayerInitialPosition()
+    {
+        initialPlayerPositionLastRound = player.transform.position;
+
+        yield return new WaitForSeconds(recorder.maxRecordTime);
+
+        while (true)
+        {
+            initialPlayerPositionLastRound = player.transform.position;
+
+            yield return new WaitForEndOfFrame();
         }
     }
 }
