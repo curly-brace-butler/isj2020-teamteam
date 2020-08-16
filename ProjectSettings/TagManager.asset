@@ -5,6 +5,7 @@ TagManager:
   serializedVersion: 2
   tags:
   - PlayerBall
+  - DuplicateBall
   layers:
   - Default
   - TransparentFX

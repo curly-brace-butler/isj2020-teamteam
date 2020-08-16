@@ -61,6 +61,15 @@ public class PlayerController : MonoBehaviour
         transform.Translate(direction * speed * Time.fixedDeltaTime);
     }
 
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.tag == Constant.DuplicateBallTag)
+        {
+            Debug.LogWarning("Player Death");
+            //Kill();
+        }
+    }
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (hasBallExited && collision.tag == Constant.PlayerBallTag)

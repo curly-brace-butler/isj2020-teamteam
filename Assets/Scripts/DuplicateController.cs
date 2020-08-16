@@ -60,4 +60,12 @@ public class DuplicateController : MonoBehaviour
 
         transform.Translate(direction * speed * Time.fixedDeltaTime);
     }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.tag == Constant.PlayerBallTag)
+        {
+            Kill();
+        }
+    }
 }
