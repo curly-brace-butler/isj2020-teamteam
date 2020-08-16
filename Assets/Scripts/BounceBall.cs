@@ -7,6 +7,13 @@ public class BounceBall : MonoBehaviour
     public float speed = 1f;
     public Vector2 direction = new Vector2(-1, 0);
 
+    Rigidbody2D rigid;
+
+    private void Awake()
+    {
+        rigid = GetComponent<Rigidbody2D>();
+    }
+
     private void FixedUpdate()
     {
         transform.Translate(direction * speed * Time.fixedDeltaTime);
@@ -31,6 +38,7 @@ public class BounceBall : MonoBehaviour
         this.speed = speed;
 
         transform.parent = null;
+        rigid.simulated = true;
 
         enabled = true;
     }
@@ -38,6 +46,8 @@ public class BounceBall : MonoBehaviour
     public void Catch(Transform parent)
     {
         enabled = false;
+
+        rigid.simulated = false;
 
         transform.parent = parent;
         transform.localPosition = Vector3.zero;

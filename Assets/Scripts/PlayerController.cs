@@ -13,6 +13,8 @@ public class PlayerController : MonoBehaviour
     Vector2 direction;
     Vector2 mouseDirection;
 
+    bool hasBallExited = false;
+
     private void Awake()
     {
         direction = Vector2.zero;
@@ -34,6 +36,8 @@ public class PlayerController : MonoBehaviour
         {
             playerBall.Throw(mouseDirection, ballSpeed);
             playerBall = null;
+
+            hasBallExited = false;
         }
     }
 
@@ -59,11 +63,18 @@ public class PlayerController : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.tag == "PlayerBall")
+        if (hasBallExited && collision.tag == Constant.PlayerBallTag)
         {
-            Debug.Log("Trigger with ball");
             playerBall = collision.GetComponent<BounceBall>();
             playerBall.Catch(transform);
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (!hasBallExited && collision.tag == Constant.PlayerBallTag)
+        {
+            hasBallExited = true;
         }
     }
 }

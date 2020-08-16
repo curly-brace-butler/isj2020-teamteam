@@ -15,9 +15,9 @@ TagManager:
   - 
   - 
   - Post-processing
-  - Enemy
+  - Duplicate
   - Player
-  - InvisibleWall
+  - Projectile
   - 
   - 
   - 
