@@ -11,6 +11,13 @@ public class GameManager : MonoBehaviour
     public PlayerController player;
     public DuplicateController duplicatePrefabs;
     public Text scoreText;
+    public Text roundText;
+
+    [Header("Round")]
+    public float roundTimeBreak = 5f;
+
+    [Header("Event")]
+    public GameEvent onRoundEnd;
 
     int score;
     int round;
@@ -87,8 +94,19 @@ public class GameManager : MonoBehaviour
 
         if (--aliveDuplicate == 0)
         {
-            NewRound();
+            StartCoroutine(AnimationNewRound());
         }
+    }
+
+    IEnumerator AnimationNewRound()
+    {
+        onRoundEnd.Raise();
+
+        roundText.text = round.ToString();
+
+        yield return new WaitForSeconds(roundTimeBreak);
+
+        NewRound();
     }
 
     IEnumerator UpdatePlayerInitialPosition()
