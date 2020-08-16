@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using UnityEngine.SceneManagement;
 
 
@@ -9,8 +10,14 @@ public class PlayerController : MonoBehaviour
 
     [Header("Shooting")]
     public float ballSpeed = 8f;
-    public Transform mouseIndicator;
+    public float maxBallSpeed = 8f;
+    public float chargeTime = 1f;
     public BounceBall playerBall;
+
+    [Header("Indicator")]
+    public Transform mouseIndicator;
+    public float normalIndicatorScale = 0.2f;
+    public float maxIndicatorScale = 0.5f;
 
     [Header("Event")]
     public GameEvent OnPlayerKilled;
@@ -21,6 +28,7 @@ public class PlayerController : MonoBehaviour
     Vector2 mouseDirection;
     bool hasBallExited = false;
     bool hasBallInHand = true;
+    float chargeBall = 0;
 
     private void Awake()
     {
@@ -40,16 +48,30 @@ public class PlayerController : MonoBehaviour
         UpdatePosition();
         UpdateMousePosition();
 
-        if (Input.GetMouseButtonDown(0) && hasBallInHand)
+        if (Input.GetMouseButtonUp(0) && hasBallInHand)
         {
-            BallThrow = mouseDirection * ballSpeed;
-            playerBall.Throw(mouseDirection, ballSpeed);
+            float chargeBallSpeed = ballSpeed + (maxBallSpeed - ballSpeed) * chargeBall;
+
+            BallThrow = mouseDirection * chargeBallSpeed;
+            playerBall.Throw(mouseDirection, chargeBallSpeed);
 
             hasBallInHand = false;
             hasBallExited = false;
+
+            mouseIndicator.localScale = Vector2.one * normalIndicatorScale;
+
+            chargeBall = 0;
         }
         else
         {
+            if (Input.GetMouseButton(0) && hasBallInHand)
+            {
+                chargeBall = Math.Min(1f, chargeBall + chargeTime * Time.deltaTime);
+
+                float indicatorChargeScale = normalIndicatorScale + (maxIndicatorScale - normalIndicatorScale) * chargeBall;
+                mouseIndicator.localScale = new Vector2(indicatorChargeScale, normalIndicatorScale);
+            }
+
             BallThrow = Vector2.zero;
         }
     }
