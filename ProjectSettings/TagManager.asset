@@ -8,6 +8,8 @@ TagManager:
   - DuplicateBall
   - Wall
   - Duplicate
+  - ShowOnStart
+  - ShowOnEnd
   layers:
   - Default
   - TransparentFX
