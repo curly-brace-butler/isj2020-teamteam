@@ -10,14 +10,15 @@ public class PlayerController : MonoBehaviour
     public Transform mouseIndicator;
     public BounceBall playerBall;
 
-    Vector2 direction;
-    Vector2 mouseDirection;
+    public Vector2 Movement { get; private set; }
+    public Vector2 BallThrow { get; private set; }
 
+    Vector2 mouseDirection;
     bool hasBallExited = false;
 
     private void Awake()
     {
-        direction = Vector2.zero;
+        Movement = Vector2.zero;
     }
 
     void Start()
@@ -30,18 +31,24 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
-        UpdateMouse();
+        UpdatePosition();
+        UpdateMousePosition();
 
         if (Input.GetMouseButtonDown(0) && playerBall != null)
         {
+            BallThrow = mouseDirection * ballSpeed;
             playerBall.Throw(mouseDirection, ballSpeed);
             playerBall = null;
 
             hasBallExited = false;
         }
+        else
+        {
+            BallThrow = Vector2.zero;
+        }
     }
 
-    private void UpdateMouse()
+    private void UpdateMousePosition()
     {
         Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         mouseWorldPos.z = 0;
@@ -53,12 +60,15 @@ public class PlayerController : MonoBehaviour
         mouseIndicator.position = transform.position + (Vector3)mouseDirection;
     }
 
-    private void FixedUpdate()
+    private void UpdatePosition()
     {
-        direction.x = Input.GetAxisRaw("Horizontal");
-        direction.y = Input.GetAxisRaw("Vertical");
+        Vector2 input;
+        input.x = Input.GetAxis("Horizontal");
+        input.y = Input.GetAxis("Vertical");
 
-        transform.Translate(direction * speed * Time.fixedDeltaTime);
+        Movement = input * speed;
+
+        transform.Translate(Movement * Time.deltaTime);
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
