@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class BounceBall : MonoBehaviour
 {
+    public int maxBounce = -1;
     public float speed = 1f;
     public Vector2 direction = new Vector2(-1, 0);
 
@@ -12,6 +13,7 @@ public class BounceBall : MonoBehaviour
     public AudioClip duplicateCollisionSound;
 
     Rigidbody2D rigid;
+    int bounce = 0;
 
     private void Awake()
     {
@@ -39,6 +41,11 @@ public class BounceBall : MonoBehaviour
         var contactPoint = collision.GetContact(0).point;
         var normal = (contactPoint - (Vector2)transform.position).normalized;
         direction = Vector2.Reflect(direction, normal);
+
+        if (maxBounce != -1 && ++bounce >= maxBounce)
+        {
+            Destroy(gameObject);
+        }
     }
 
     public void Throw(Vector2 force)

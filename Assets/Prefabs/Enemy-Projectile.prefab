@@ -98,8 +98,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1ad00b7010220af4fa0ef926c682de1f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  maxBounce: 3
   speed: 5
   direction: {x: -1, y: 0}
+  ballAudioSource: {fileID: 0}
+  wallCollisionSound: {fileID: 0}
+  duplicateCollisionSound: {fileID: 0}
 --- !u!58 &4228091340823795616
 CircleCollider2D:
   m_ObjectHideFlags: 0
