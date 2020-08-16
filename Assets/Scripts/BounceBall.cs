@@ -5,6 +5,7 @@ using UnityEngine;
 public class BounceBall : MonoBehaviour
 {
     public float speed = 1f;
+    public float deceleration = 0f;
     public Vector2 direction = new Vector2(-1, 0);
 
     public AudioSource ballAudioSource;
@@ -20,6 +21,13 @@ public class BounceBall : MonoBehaviour
 
     private void FixedUpdate()
     {
+        speed -= deceleration * Time.fixedDeltaTime;
+
+        if (speed <= 0)
+        {
+            Destroy(gameObject);
+        }
+
         transform.Translate(direction * speed * Time.fixedDeltaTime);
     }
 

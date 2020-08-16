@@ -99,7 +99,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 5
+  deceleration: 0
   direction: {x: -1, y: 0}
+  ballAudioSource: {fileID: 0}
+  wallCollisionSound: {fileID: 0}
+  duplicateCollisionSound: {fileID: 0}
 --- !u!58 &4228091340823795616
 CircleCollider2D:
   m_ObjectHideFlags: 0
