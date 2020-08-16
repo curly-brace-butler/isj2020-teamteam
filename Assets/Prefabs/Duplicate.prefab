@@ -137,6 +137,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 5
+  ballSpeed: 8
+  ballPrefabs: {fileID: 4228091340823795623, guid: e48ccf45543172743bdc9f789aa85386,
+    type: 3}
   OnDuplicateDeath: {fileID: 11400000, guid: 8695b0b5aac79a947951a42d39fdadb6, type: 2}
 --- !u!114 &5696708179663370118
 MonoBehaviour:

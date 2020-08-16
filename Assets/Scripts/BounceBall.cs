@@ -26,6 +26,11 @@ public class BounceBall : MonoBehaviour
         direction = Vector2.Reflect(direction, normal);
     }
 
+    public void Throw(Vector2 force)
+    {
+        Throw(force.normalized, force.magnitude);
+    }
+
     public void Throw(Vector2 direction, float speed)
     {
         this.direction = direction;

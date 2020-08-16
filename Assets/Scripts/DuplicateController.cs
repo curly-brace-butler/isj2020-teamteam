@@ -4,12 +4,18 @@ using UnityEngine;
 [RequireComponent(typeof(Reader))]
 public class DuplicateController : MonoBehaviour
 {
+    [Header("Movement")]
     public float speed = 5f;
+
+    [Header("Shooting")]
+    public float ballSpeed = 8f;
+    public BounceBall ballPrefabs;
+
+    [Header("Event")]
     public GameEvent OnDuplicateDeath;
 
-    PlayerInput remainInput;
-
     Reader reader;
+    PlayerInput remainInput;
 
     Vector2 initialPosition;
 
@@ -51,7 +57,8 @@ public class DuplicateController : MonoBehaviour
 
         if (remainInput.shoot != Vector2.zero)
         {
-            Debug.Log("Shoot");
+            var ball = Instantiate(ballPrefabs, transform.position, Quaternion.identity);
+            ball.Throw(remainInput.shoot);
         }
 
         remainInput.deltaTime -= deltaTime;
