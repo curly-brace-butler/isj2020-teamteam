@@ -13,6 +13,8 @@ public class BounceBall : MonoBehaviour
 
     Rigidbody2D rigid;
 
+    public bool destroyOnCollision = false;
+
     private void Awake()
     {
         rigid = GetComponent<Rigidbody2D>();
@@ -36,6 +38,12 @@ public class BounceBall : MonoBehaviour
                 ballAudioSource.PlayOneShot(duplicateCollisionSound, 0.5f);
             }
         }
+
+        if (destroyOnCollision)
+        {
+            Destroy(gameObject);
+        }
+
         var contactPoint = collision.GetContact(0).point;
         var normal = (contactPoint - (Vector2)transform.position).normalized;
         direction = Vector2.Reflect(direction, normal);
