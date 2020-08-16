@@ -296,9 +296,9 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: e2a5f2fe124fcae428eb0d0f69e62be0, type: 3}
+  m_audioClip: {fileID: 8300000, guid: cf279c3966a4da24285e516a9f32ebb7, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.069
   m_Pitch: 1
   Loop: 1
   Mute: 0
@@ -1183,7 +1183,10 @@ PrefabInstance:
       propertyPath: mainCamera
       value: 
       objectReference: {fileID: 1399136490}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 1639699875227743592, guid: 8591f9fb0fa2e714583efdfef6cfa0b6, type: 3}
+    - {fileID: 5694656982759647281, guid: 8591f9fb0fa2e714583efdfef6cfa0b6, type: 3}
+    - {fileID: 1035424245, guid: 8591f9fb0fa2e714583efdfef6cfa0b6, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 8591f9fb0fa2e714583efdfef6cfa0b6, type: 3}
 --- !u!1 &1035424240 stripped
 GameObject:
@@ -1203,7 +1206,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 5bf57336738f67147a5bfef452b9bbc3, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 0.1
+  m_Volume: 0.6
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -1247,7 +1250,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0
+      value: 0.8
       inSlope: 0
       outSlope: 0
       tangentMode: 0
