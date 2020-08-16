@@ -985,6 +985,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 93171342ba8a654419d90100e21ea5b4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  maxRecordTime: 5
   controller: {fileID: 18648333}
 --- !u!4 &1060931101
 Transform:
@@ -1273,6 +1274,11 @@ PrefabInstance:
     - target: {fileID: 5762594935846402733, guid: e9ad4bcd688a00b4cb08b4d3adfaa85a,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8807261919782557588, guid: e9ad4bcd688a00b4cb08b4d3adfaa85a,
+        type: 3}
+      propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
