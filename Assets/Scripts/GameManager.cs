@@ -32,14 +32,6 @@ public class GameManager : MonoBehaviour
         StartCoroutine(UpdatePlayerInitialPosition());
     }
 
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            NewRound();
-        }
-    }
-
     public void SpawnDuplicate(Vector3 initialPlayerPosition)
     {
         var tape = recorder.StopRecording();

@@ -1,4 +1,5 @@
 ﻿using System;
+using Unity.Mathematics;
 using UnityEngine;
 
 [RequireComponent(typeof(Reader))]
@@ -18,6 +19,7 @@ public class DuplicateController : MonoBehaviour
     PlayerInput remainInput;
 
     Vector2 initialPosition;
+    bool hasShoot = false;
 
     private void Awake()
     {
@@ -57,8 +59,8 @@ public class DuplicateController : MonoBehaviour
 
         if (remainInput.shoot != Vector2.zero)
         {
-            var ball = Instantiate(ballPrefabs, transform.position, Quaternion.identity);
-            ball.Throw(remainInput.shoot);
+            Shoot(remainInput.shoot.normalized, remainInput.shoot.magnitude);
+            hasShoot = true;
         }
 
         remainInput.deltaTime -= deltaTime;
@@ -70,9 +72,25 @@ public class DuplicateController : MonoBehaviour
         {
             reader.Restart();
             transform.position = initialPosition;
+
+            if (!hasShoot)
+            {
+                Vector2 direction;
+                direction.x = UnityEngine.Random.Range(0f, 1f);
+                direction.y = UnityEngine.Random.Range(0f, 1f);
+                Shoot(direction.normalized, ballSpeed);
+            }
+
+            hasShoot = false;
         }
 
         return reader.GetFrame();
+    }
+
+    private void Shoot(Vector2 direction, float speed)
+    {
+        var ball = Instantiate(ballPrefabs, transform.position, Quaternion.identity);
+        ball.Throw(direction, speed);
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
