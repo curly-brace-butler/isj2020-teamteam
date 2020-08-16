@@ -3,33 +3,53 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 [RequireComponent(typeof(Recorder))]
 public class GameManager : MonoBehaviour
 {
     public PlayerController player;
     public DuplicateController duplicatePrefabs;
+    public Text scoreText;
 
+    int score;
     int round;
     int aliveDuplicate;
 
     Recorder recorder;
-
     List<DuplicateController> duplicates;
 
+    bool playerIsDead = false;
     Vector3 initialPlayerPositionLastRound;
+
+    Coroutine updatePlayerPosition;
 
     private void Awake()
     {
         duplicates = new List<DuplicateController>();
         recorder = GetComponent<Recorder>();
         aliveDuplicate = 1;
-        round = 0;
+        round = 1;
     }
 
     private void Start()
     {
-        StartCoroutine(UpdatePlayerInitialPosition());
+        updatePlayerPosition = StartCoroutine(UpdatePlayerInitialPosition());
+    }
+
+    private void Update()
+    {
+        if (playerIsDead && Input.GetKeyDown(KeyCode.R))
+        {
+            SceneManager.LoadScene(0);
+        }
+    }
+
+    public void PlayerHasBeenKilled()
+    {
+        StopCoroutine(updatePlayerPosition);
+
+        playerIsDead = true;
     }
 
     public void SpawnDuplicate(Vector3 initialPlayerPosition)
@@ -61,6 +81,10 @@ public class GameManager : MonoBehaviour
 
     public void DuplicateHasBeenKilled()
     {
+        score += round * 1;
+
+        scoreText.text = $"Score {score}";
+
         if (--aliveDuplicate == 0)
         {
             NewRound();

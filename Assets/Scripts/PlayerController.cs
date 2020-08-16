@@ -12,11 +12,15 @@ public class PlayerController : MonoBehaviour
     public Transform mouseIndicator;
     public BounceBall playerBall;
 
+    [Header("Event")]
+    public GameEvent OnPlayerKilled;
+
     public Vector2 Movement { get; private set; }
     public Vector2 BallThrow { get; private set; }
 
     Vector2 mouseDirection;
     bool hasBallExited = false;
+    bool hasBallInHand = true;
 
     private void Awake()
     {
@@ -36,12 +40,12 @@ public class PlayerController : MonoBehaviour
         UpdatePosition();
         UpdateMousePosition();
 
-        if (Input.GetMouseButtonDown(0) && playerBall != null)
+        if (Input.GetMouseButtonDown(0) && hasBallInHand)
         {
             BallThrow = mouseDirection * ballSpeed;
             playerBall.Throw(mouseDirection, ballSpeed);
-            playerBall = null;
 
+            hasBallInHand = false;
             hasBallExited = false;
         }
         else
@@ -81,6 +85,11 @@ public class PlayerController : MonoBehaviour
             // TODO: Reload on death breaks player-projectile physics (inverts launch vector??)
             // SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
             //Kill();
+
+            OnPlayerKilled.Raise();
+
+            Destroy(playerBall.gameObject);
+            Destroy(gameObject);
         }
     }
 
@@ -90,6 +99,8 @@ public class PlayerController : MonoBehaviour
         {
             playerBall = collision.GetComponent<BounceBall>();
             playerBall.Catch(transform);
+
+            hasBallInHand = true;
         }
     }
 
