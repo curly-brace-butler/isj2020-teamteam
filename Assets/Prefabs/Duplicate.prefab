@@ -136,8 +136,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 87971d083f9844d4abe36e874a30d0c7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 5
-  ballSpeed: 8
+  speed: 6
+  timeRespawn: 5
+  ballSpeed: 10
   ballPrefabs: {fileID: 4228091340823795623, guid: e48ccf45543172743bdc9f789aa85386,
     type: 3}
   OnDuplicateDeath: {fileID: 11400000, guid: 8695b0b5aac79a947951a42d39fdadb6, type: 2}

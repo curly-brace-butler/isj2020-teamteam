@@ -260,9 +260,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 20e89474dba1ab04cb06e21edd57b739, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 5
-  ballSpeed: 8
-  maxBallSpeed: 15
+  speed: 8
+  ballSpeed: 10
+  maxBallSpeed: 20
   chargeTime: 1
   playerBall: {fileID: 658821497}
   mouseIndicator: {fileID: 563042401}
