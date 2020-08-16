@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using Unity.Mathematics;
 using UnityEngine;
 
@@ -7,6 +8,7 @@ public class DuplicateController : MonoBehaviour
 {
     [Header("Movement")]
     public float speed = 5f;
+    public float timeRespawn = 5f;
 
     [Header("Shooting")]
     public float ballSpeed = 8f;
@@ -20,23 +22,32 @@ public class DuplicateController : MonoBehaviour
 
     Vector2 initialPosition;
     bool hasShoot = false;
+    Coroutine respawn;
 
     private void Awake()
     {
         initialPosition = transform.position;
         reader = GetComponent<Reader>();
+
+        respawn = StartCoroutine(RespawnAfterTime());
     }
 
     public void Restore()
     {
+        reader.Restart();
         transform.position = initialPosition;
         gameObject.SetActive(true);
+
+        respawn = StartCoroutine(RespawnAfterTime());
+        hasShoot = false;
     }
 
     public void Kill()
     {
         gameObject.SetActive(false);
         OnDuplicateDeath?.Raise();
+
+        StopCoroutine(respawn);
     }
 
     private void Update()
@@ -60,7 +71,6 @@ public class DuplicateController : MonoBehaviour
         if (remainInput.shoot != Vector2.zero)
         {
             Shoot(remainInput.shoot.normalized, remainInput.shoot.magnitude);
-            hasShoot = true;
         }
 
         remainInput.deltaTime -= deltaTime;
@@ -70,9 +80,6 @@ public class DuplicateController : MonoBehaviour
     {
         if (!reader.HasNext())
         {
-            reader.Restart();
-            transform.position = initialPosition;
-
             if (!hasShoot)
             {
                 Vector2 direction;
@@ -81,7 +88,7 @@ public class DuplicateController : MonoBehaviour
                 Shoot(direction.normalized, ballSpeed);
             }
 
-            hasShoot = false;
+            return default;
         }
 
         return reader.GetFrame();
@@ -91,6 +98,8 @@ public class DuplicateController : MonoBehaviour
     {
         var ball = Instantiate(ballPrefabs, transform.position, Quaternion.identity);
         ball.Throw(direction, speed);
+
+        hasShoot = true;
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -98,6 +107,19 @@ public class DuplicateController : MonoBehaviour
         if (collision.gameObject.tag == Constant.PlayerBallTag)
         {
             Kill();
+        }
+    }
+
+    private IEnumerator RespawnAfterTime()
+    {
+        while (true)
+        {
+            yield return new WaitForSeconds(timeRespawn);
+
+            transform.position = initialPosition;
+            hasShoot = false;
+
+            reader.Restart();
         }
     }
 }
