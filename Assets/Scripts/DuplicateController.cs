@@ -5,35 +5,23 @@ using UnityEngine;
 public class DuplicateController : MonoBehaviour
 {
     public float speed = 5f;
-
     public GameEvent OnDuplicateDeath;
 
-    Vector2 input;
-    Vector2 direction;
+    PlayerInput remainInput;
+
     Reader reader;
 
-    Vector2 intialPosition;
+    Vector2 initialPosition;
 
     private void Awake()
     {
-        intialPosition = transform.position;
-
-        input = Vector2.zero;
-        direction = Vector2.zero;
+        initialPosition = transform.position;
         reader = GetComponent<Reader>();
-
-        reader.OnTapeFinish += Restore;
     }
 
     public void Restore()
     {
-        transform.position = intialPosition;
-        UpdateInputs();
-
-        direction = input.normalized;
-
-        reader.Restore();
-
+        transform.position = initialPosition;
         gameObject.SetActive(true);
     }
 
@@ -43,22 +31,41 @@ public class DuplicateController : MonoBehaviour
         OnDuplicateDeath?.Raise();
     }
 
-    private void UpdateInputs()
-    {
-        input.x = reader.GetAxisRaw(Reader.Axis.Horizontal);
-        input.y = reader.GetAxisRaw(Reader.Axis.Vertical);
-    }
-
     private void Update()
     {
-        UpdateInputs();
+        float remainDeltaTime = Time.deltaTime;
+        do
+        {
+            remainInput = GetNextFrame();
+            remainDeltaTime = Mathf.Min(remainDeltaTime, remainInput.deltaTime);
+
+            ApplyInputAction(remainDeltaTime);
+            remainDeltaTime -= remainDeltaTime;
+        } 
+        while (remainDeltaTime != 0);
     }
 
-    private void FixedUpdate()
+    private void ApplyInputAction(float deltaTime)
     {
-        direction = input.normalized;
+        transform.Translate(remainInput.movement * deltaTime);
 
-        transform.Translate(direction * speed * Time.fixedDeltaTime);
+        if (remainInput.shoot != Vector2.zero)
+        {
+            Debug.Log("Shoot");
+        }
+
+        remainInput.deltaTime -= deltaTime;
+    }
+
+    private PlayerInput GetNextFrame()
+    {
+        if (!reader.HasNext())
+        {
+            reader.Restart();
+            transform.position = initialPosition;
+        }
+
+        return reader.GetFrame();
     }
 
     private void OnCollisionEnter2D(Collision2D collision)

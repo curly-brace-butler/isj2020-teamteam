@@ -1,100 +1,38 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using UnityEngine;
-
-public struct TapeReader
-{
-    public Vector2 intialPosition;
-    public List<InputAction> inputActions;
-
-    public TapeReader(Vector2 intialPosition, List<InputAction> tape)
-    {
-        this.intialPosition = intialPosition;
-        this.inputActions = tape;
-    }
-}
 
 public class Reader : MonoBehaviour
 {
-    public enum Axis
-    { 
-        Horizontal,
-        Vertical
+    int tapeIndex = 0;
+    List<PlayerInput> playerInputs;
+
+    public void Setup(List<PlayerInput> playerInputs)
+    {
+        this.playerInputs = playerInputs;
     }
 
-    public Action OnTapeFinish;
+    public bool HasNext()
+    {
+        if (playerInputs == null)
+            return false;
 
-    TapeReader tape;
-    int tapeIndex;
+        return tapeIndex < playerInputs.Count;
+    }
 
-    float startTime;
-    InputAction.Action prevAxisAction = InputAction.Action.None;
-    InputAction.Action axisAction = InputAction.Action.None;
+    public PlayerInput GetFrame()
+    {
+        if (playerInputs == null)
+            return default;
 
-    public void Initialize(TapeReader tapeReader)
+        return playerInputs[tapeIndex++];
+    }
+
+    public void Restart()
     {
         tapeIndex = 0;
-        tape = tapeReader;
     }
-
-    public void Restore()
-    {
-        tapeIndex = 0;
-        startTime = Time.time;
-    }
-
-    private void Update()
-    {
-        float currentTime = Time.time - startTime;
-        var inputAction = tape.inputActions[tapeIndex];
-        if (inputAction.time <= currentTime)
-        {
-            if (inputAction.action == InputAction.Action.EndRecord)
-            {
-                Restore();
-
-                OnTapeFinish?.Invoke();
-            }
-            else
-            {
-                InputAction.Action newAxisAction = axisAction;
-                switch (inputAction.status)
-                {
-                    case InputAction.Status.Pressed:
-                        newAxisAction |= inputAction.action;
-                        break;
-                    case InputAction.Status.Released:
-                        newAxisAction &= ~inputAction.action;
-                        break;
-                }
-
-                prevAxisAction = axisAction;
-                axisAction = newAxisAction;
-
-                tapeIndex++;
-            }
-        }
-    }
-
-    public float GetAxisRaw(Axis axis)
-    {
-        float axisValue = 0;
-        switch (axis)
-        {
-            case Axis.Horizontal:
-                axisValue -= axisAction.HasFlag(InputAction.Action.Left) ? 1 : 0;
-                axisValue += axisAction.HasFlag(InputAction.Action.Right) ? 1 : 0;
-                break;
-            case Axis.Vertical:
-                axisValue -= axisAction.HasFlag(InputAction.Action.Down) ? 1 : 0;
-                axisValue += axisAction.HasFlag(InputAction.Action.Up) ? 1 : 0;
-                break;
-        }
-        return axisValue;
-    }
-    
-
 }

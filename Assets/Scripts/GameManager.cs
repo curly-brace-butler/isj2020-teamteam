@@ -45,7 +45,7 @@ public class GameManager : MonoBehaviour
         var tape = recorder.StopRecording();
 
         DuplicateController duplicate = Instantiate(duplicatePrefabs, initialPlayerPosition, Quaternion.identity);
-        duplicate.GetComponent<Reader>().Initialize(new TapeReader { inputActions = tape, intialPosition = initialPlayerPosition });
+        duplicate.GetComponent<Reader>().Setup(tape);
 
         duplicates.Add(duplicate);
     }
@@ -64,7 +64,7 @@ public class GameManager : MonoBehaviour
             duplic.Restore();
         }
 
-        recorder.StartRecording(Time.time);
+        recorder.StartRecording();
     }
 
     public void DuplicateHasBeenKilled()
