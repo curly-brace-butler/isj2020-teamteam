@@ -7,6 +7,8 @@ public struct PlayerInput
     public float deltaTime;
     public Vector2 movement;
     public Vector2 shoot;
+
+    public Vector2 position;
 }
 
 public class Recorder : MonoBehaviour
@@ -25,7 +27,8 @@ public class Recorder : MonoBehaviour
         {
             movement = controller.Movement,
             shoot = controller.BallThrow,
-            deltaTime = Time.deltaTime
+            deltaTime = Time.deltaTime,
+            position = controller.transform.position
         });
 
         accumulateTime += Time.deltaTime;

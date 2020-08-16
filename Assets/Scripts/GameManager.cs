@@ -27,8 +27,6 @@ public class GameManager : MonoBehaviour
     List<DuplicateController> duplicates;
 
     bool playerIsDead = false;
-    Vector3 initialPlayerPositionLastRound;
-
     Coroutine updatePlayerPosition;
 
     private void Awake()
@@ -37,11 +35,6 @@ public class GameManager : MonoBehaviour
         recorder = GetComponent<Recorder>();
         aliveDuplicate = 1;
         round = 1;
-    }
-
-    private void Start()
-    {
-        updatePlayerPosition = StartCoroutine(UpdatePlayerInitialPosition());
     }
 
     private void Update()
@@ -59,11 +52,11 @@ public class GameManager : MonoBehaviour
         playerIsDead = true;
     }
 
-    public void SpawnDuplicate(Vector3 initialPlayerPosition)
+    public void SpawnDuplicate()
     {
         var tape = recorder.StopRecording();
 
-        DuplicateController duplicate = Instantiate(duplicatePrefabs, initialPlayerPosition, Quaternion.identity);
+        DuplicateController duplicate = Instantiate(duplicatePrefabs, tape[0].position, Quaternion.identity);
         duplicate.GetComponent<Reader>().Setup(tape);
 
         duplicates.Add(duplicate);
@@ -71,9 +64,7 @@ public class GameManager : MonoBehaviour
 
     public void NewRound()
     {
-        SpawnDuplicate(initialPlayerPositionLastRound);
-
-        initialPlayerPositionLastRound = player.transform.position;
+        SpawnDuplicate();
 
         aliveDuplicate = duplicates.Count;
         round++;
@@ -107,19 +98,5 @@ public class GameManager : MonoBehaviour
         yield return new WaitForSeconds(roundTimeBreak);
 
         NewRound();
-    }
-
-    IEnumerator UpdatePlayerInitialPosition()
-    {
-        initialPlayerPositionLastRound = player.transform.position;
-
-        yield return new WaitForSeconds(recorder.maxRecordTime);
-
-        while (true)
-        {
-            initialPlayerPositionLastRound = player.transform.position;
-
-            yield return new WaitForEndOfFrame();
-        }
     }
 }
